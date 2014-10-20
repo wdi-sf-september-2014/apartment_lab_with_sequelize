@@ -29,6 +29,9 @@ By leveraging Express, Sequelize, and postgres
   * A Manager model and its migrations
   * A Tenant model and its migrations
 * Run the migrations
+* Set up your `app.js` file with all the basic modules you need
+* Make sure that the app starts on `localhost:3000`
+* Set up your routes, and their function handlers
 * Use the sequelize models to display all managers in the appropriate
   view
 * Use the sequelize models to display all tenants of a manager in the
