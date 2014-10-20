@@ -33,6 +33,8 @@ By leveraging Express, Sequelize, and postgres
   view
 * Use the sequelize models to display all tenants of a manager in the
   appropriate view
+* Write create/update/delete on tenants and managers, using the models'
+  ORM methods
 
 ### Bonus
 
