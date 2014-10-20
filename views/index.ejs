@@ -23,30 +23,16 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
+      <% managers.forEach(function(m) { %>
 			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
+        <td><%= m.firstname %></td>
+        <td><%= m.lastname %></td>
+        <td><%= m.property %></td>
 				<td>
 					<a href="#" class="btn btn-primary">View Tenants</a>
 				</td>
 			</tr>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
-				</td>
-			</tr>
+      <% }); %>
 		</tbody>
 	</table>
 </div>

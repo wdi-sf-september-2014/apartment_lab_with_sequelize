@@ -1,7 +1,8 @@
 var express = require('express'),
     bodyParser = require('body-parser'),
     methodOverride = require("method-override"),
-    app = express();
+    app = express(),
+    models = require('./models/index');
 
 app.set("view engine", "ejs");
 
@@ -14,7 +15,9 @@ app.use(methodOverride("_method"));
 app.use(express.static(__dirname + '/public'));
 
 app.get("/", function(req, res) {
-  res.render('index');
+  models.Manager.findAll().then(function(managers) { 
+    res.render('index', { managers: managers });
+  });
 });
 
 app.get("/managers/:manager_id/tenants", function(req, res) {
