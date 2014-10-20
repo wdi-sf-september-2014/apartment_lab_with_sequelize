@@ -29,7 +29,7 @@
         <td><%= m.lastname %></td>
         <td><%= m.property %></td>
 				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
+          <a href="/managers/<%= m.id %>/tenants" class="btn btn-primary">View Tenants</a>
 				</td>
 			</tr>
       <% }); %>

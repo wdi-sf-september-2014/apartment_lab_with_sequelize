@@ -21,7 +21,11 @@ app.get("/", function(req, res) {
 });
 
 app.get("/managers/:manager_id/tenants", function(req, res) {
-  res.render('tenants');
+  models.Tenant.findAll(
+    { where: { manager_id: parseInt(req.params.manager_id) } }
+  ).then(function(tenants) {
+    res.render('tenants', { tenants: tenants });
+  });
 });
 
 app.listen(3000);

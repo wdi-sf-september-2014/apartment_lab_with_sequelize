@@ -23,14 +23,15 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
+      <% tenants.forEach(function(t) { %>
 			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
+        <td><%= t.firstname %></td>
+        <td><%= t.lastname %></td>
 				<td>
 					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#maint">Maintenance Requests</a>
 				</td>
 			</tr>
+      <% }); %>
 		</tbody>
 	</table>
 </div>
