@@ -23,30 +23,16 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
-				</td>
-			</tr>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary">View Tenants</a>
-				</td>
-			</tr>
+			<% for (var i = 0; i < all_managers.length; i++) { %>
+				<tr>
+					<td><%= all_managers[i].first_name %></td>
+					<td><%= all_managers[i].last_name %></td>
+					<td><%= all_managers[i].property %></td>
+					<td>
+						<a href="/tenant/<%= all_managers[i].id %>" class="btn btn-primary">View Tenants</a>
+					</td>
+				</tr>
+			<% } %>
 		</tbody>
 	</table>
 </div>
@@ -59,24 +45,26 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add a Manager</h4>
 			</div>
+			<form type="text" method="post" action="/">
 			<div class="modal-body">
 				<h4>First Name</h4>
 				<div class="margin-top-20">
-					<input id="man-first-name" class="form-control" placeholder="Manager First Name" />
+					<input id="man-first-name" class="form-control" name="firstname" placeholder="Manager First Name" />
 				</div>
 				<h4 class="margin-top-20">Last Name</h4>
 				<div class="margin-top-20">
-					<input id="man-last-name" class="form-control" placeholder="Manager Last Name" />
+					<input id="man-last-name" class="form-control" name="lastname" placeholder="Manager Last Name" />
 				</div>
 				<h4 class="margin-top-20">Property Owned</h4>
 				<div class="margin-top-20">
-					<input id="prop-address" class="form-control" placeholder="Property Address" />
+					<input id="prop-address" class="form-control" name="property" placeholder="Property Address" />
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="save-manager" type="button" class="btn btn-primary">Save Manager</button>
+				<button id="save-manager" type="submit" class="btn btn-primary">Save Manager</button>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
