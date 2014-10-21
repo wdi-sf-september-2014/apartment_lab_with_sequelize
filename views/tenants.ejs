@@ -3,7 +3,7 @@
 <head>
 	<title>Apartment Manager</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css" />
+	
 </head>
 <body>
 
@@ -23,14 +23,15 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#maint">Maintenance Requests</a>
-				</td>
-			</tr>
+			<% for (var i=0; i <allTenants.length; i++) { %>
+				<tr>
+					<td><%= allTenants[i].first_name%></td>
+					<td><%= allTenants[i].last_name%></td>
+					<td><%= oneManager.property%></td>
+					<td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#maint">Maintenance Requests</a></td>
+					<td><a href="#" class="edit btn btn-primary" data-toggle="modal" data-target="#edit" data-firstname="<%= allTenants[i].first_name %>" data-lastname="<%= allTenants[i].last_name %>" data-tenantid="<%= allTenants[i].id %>">Edit Tenant</a></td>
+				</tr>
+			<% } %>
 		</tbody>
 	</table>
 </div>
@@ -75,35 +76,80 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add a Tenant</h4>
 			</div>
-			<div class="modal-body">
-				<h4>First Name</h4>
-				<div class="margin-top-20">
-					<input id="tenant-first" class="form-control" placeholder="Tenant First Name" />
+			<form method="post" action="/tenants/<%= manager_id %>">
+				<div class="modal-body">
+					<h4>First Name</h4>
+					<div class="margin-top-20">
+						<input name="firstname" class="form-control" placeholder="Tenant First Name" />
+					</div>
+					<h4 class="margin-top-20">Last Name</h4>
+					<div class="margin-top-20">
+						<input name="lastname" class="form-control" placeholder="Tenant Last Name" />
+					</div>
+					<h4 class="margin-top-20">Property Rented</h4>
+					<div class="margin-top-20">
+						<select class="form-control" id="tenant-prop-select">
+							<option id="id" value="<%= i%>"><%= oneManager.property %></option>
+						</select>
+					</div>
 				</div>
-				<h4 class="margin-top-20">Last Name</h4>
-				<div class="margin-top-20">
-					<input id="tenant-last" class="form-control" placeholder="Tenant Last Name" />
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button id="save-tenant" type="submit" class="btn btn-primary">Save Tenant</button>
 				</div>
-				<h4 class="margin-top-20">Property Rented</h4>
-				<div class="margin-top-20">
-					<select class="form-control" id="tenant-prop-select">
-						<option value="1">219 East Crystal Cove Terrace</option>
-						<option value="2">219 East Crystal Cove Terrace</option>
-						<option value="3">219 East Crystal Cove Terrace</option>
-					</select>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="save-tenant" type="button" class="btn btn-primary">Save Tenant</button>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
 <!--/Modal-->
 
+<div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Edit Tenant</h4>
+			</div>
+		<form id="editForm" method="post" action="">
+			<div class="modal-body">
+				<h4>First Name</h4>
+				<div class="margin-top-20">
+					<input id="tenantfirst" name="firstname" class="form-control" placeholder="<%=allTenants.first_name%>" />
+				</div>
+				<h4 class="margin-top-20">Last Name</h4>
+				<div class="margin-top-20">
+					<input id="tenantlast" name="lastname" class="form-control" placeholder="<%=allTenants.last_name%>" />
+				</div>
+			</div>
+		</form>
+			<div class="modal-footer">
+			<form id="deleteForm" method="post" action="">
+				<button id="delete-tenant" type="submit" form="deleteForm" class="btn btn-danger" style="float: left">Delete Tenant</button>
+			</form>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button form="editForm" id="save-tenant" type="submit" class="btn btn-primary">Save Changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script type="text/javascript"> 
+	$(document).on("click", ".edit", function () {
+
+	     var firstname = $(this).data('firstname');
+	     $(".modal-body #tenantfirst").val( firstname );
+	     console.log(firstname);
+	     var lastname = $(this).data('lastname');
+	     $(".modal-body #tenantlast").val( lastname );
+	     var tenantId = $(this).data('tenantid');
+	     $(".modal-body #tenantid").val( id );
+	     $("#editForm").attr('action', '/tenants/<%= manager_id %>/' + tenantId + '?_method=put');
+	     $("#deleteForm").attr('action', '/tenants/<%= manager_id %>/' + tenantId + '?_method=delete');
+	});
+// </script>
 
 </body>
 </html>
