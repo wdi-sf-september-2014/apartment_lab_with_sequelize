@@ -2,8 +2,18 @@
 
 module.exports = function(sequelize, DataTypes) {
   var Manager = sequelize.define("Manager", {
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
+    firstname: {
+      type: DataTypes.STRING,
+      validate: {
+        isAlpha: true
+      }
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      validate: {
+        isAlpha: true
+      }
+    },
     property: DataTypes.STRING
   }, {
     classMethods: {

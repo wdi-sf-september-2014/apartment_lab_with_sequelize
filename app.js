@@ -53,6 +53,9 @@ app.post("/managers", function(req, res) {
     property: req.body.property
   }).then(function(manager) {
     res.redirect('/managers');
+  }, function(error) {
+    //req.flash('error', error);
+    res.redirect('/managers');
   });
 });
 
