@@ -3,9 +3,13 @@ var express = require('express'),
     methodOverride = require("method-override"),
     app = express(),
     models = require('./models/index'),
+    // ejs-locals, for layouts
     engine = require('ejs-locals');
 
 app.set("view engine", "ejs");
+
+// this is different from setting the view engine
+// it enables the layout functionality
 app.engine('ejs', engine);
 
 app.use(bodyParser.urlencoded({
@@ -34,32 +38,12 @@ app.get("/managers/:id/tenants", function(req, res) {
   });
 });
 
-app.put("/managers/:id", function(req, res) {
-  models.Manager.find(parseInt(req.params.id, 10)).then(function(manager){
-    manager.updateAttributes({
-      firstname: req.body.firstname,
-      lastname: req.body.lastname,
-      property: req.body.property
-    }).then(function(manager){ 
-      res.redirect('/managers/' + manager.id);
-    });
-  });
-});
-
 app.post("/managers", function(req, res) {
   models.Manager.create({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     property: req.body.property
   }).then(function(manager) {
-    res.redirect('/managers');
-  });
-});
-
-app.delete("/managers/:id", function(req, res) {
-  models.Manager.find(req.params.id).then(function(manager) {
-    manager.destroy();
-  }).then(function() {
     res.redirect('/managers');
   });
 });
