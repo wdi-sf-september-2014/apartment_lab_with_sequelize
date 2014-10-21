@@ -34,6 +34,24 @@
           <a href="/managers/<%= m.id %>/tenants" class="btn btn-primary">View Tenants</a>
 				</td>
 			</tr>
+
+      <% if (m.Tenants) { %>
+      <tr cols="5">
+        <td>
+          <h4>Tenants</h4>
+          <table class="table table-striped margin-top-20">
+            <thead>
+              <th>Tenant name</th>
+            </thead>
+            <tbody>
+              <% m.Tenants.forEach(function(t) { %>
+              <tr><td><%= t.getFullName() %></td></tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+      <% } %>
       <% }); %>
 		</tbody>
 	</table>

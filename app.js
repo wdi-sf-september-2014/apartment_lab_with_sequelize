@@ -28,7 +28,9 @@ app.get("/", function(req, res) {
 });
 
 app.get("/managers", function(req, res) {
-  models.Manager.findAll().then(function(managers) { 
+  models.Manager.findAll({
+    include: [ models.Tenant ]
+  }).then(function(managers) { 
     res.render('index', { 
       managers: managers,
       messages: req.flash('info')
@@ -37,10 +39,11 @@ app.get("/managers", function(req, res) {
 });
 
 app.get("/managers/:id/tenants", function(req, res) {
+  var managerId = parseInt(req.params.id, 10);
   models.Tenant.findAll(
-    { where: { manager_id: parseInt(req.params.id, 10) } }
+    { where: { manager_id: managerId } }
   ).then(function(tenants) {
-    res.render('tenants', { tenants: tenants });
+    res.render('tenants', { tenants: tenants, manager_id: managerId });
   });
 });
 
@@ -66,6 +69,22 @@ app.post("/managers", function(req, res) {
   }, function(error) {
     req.flash('info', error);
     res.redirect('/managers');
+  });
+});
+
+app.post("/managers/:id/tenants", function(req, res) {
+  var managerId = parseInt(req.params.id, 10),
+      path = ['/managers/', managerId, '/tenants'].join('');
+  models.Manager.find(managerId).then(function(manager){
+    manager.addTenant(models.Tenant.build({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname
+    })).then(function(manager) {
+      res.redirect(path);
+    }, function(error) {
+      req.flash('info', error);
+      res.redirect(path);
+    });
   });
 });
 
