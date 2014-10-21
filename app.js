@@ -4,6 +4,8 @@ var express = require('express'),
     app = express(),
     models = require('./models/index'),
     engine = require('ejs-locals');
+    session = require('cookie-session'),
+    flash = require('connect-flash');
 
 app.set("view engine", "ejs");
 app.engine('ejs', engine);
@@ -16,13 +18,21 @@ app.use(methodOverride("_method"));
 
 app.use(express.static(__dirname + '/public'));
 
+app.use(session({
+  keys:['key']
+}));
+app.use(flash());
+
 app.get("/", function(req, res) {
   res.redirect("/managers");
 });
 
 app.get("/managers", function(req, res) {
   models.Manager.findAll().then(function(managers) { 
-    res.render('index', { managers: managers });
+    res.render('index', { 
+      managers: managers,
+      messages: req.flash('info')
+    });
   });
 });
 
@@ -54,7 +64,7 @@ app.post("/managers", function(req, res) {
   }).then(function(manager) {
     res.redirect('/managers');
   }, function(error) {
-    //req.flash('error', error);
+    req.flash('info', error);
     res.redirect('/managers');
   });
 });

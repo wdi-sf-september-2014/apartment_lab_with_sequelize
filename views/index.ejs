@@ -7,6 +7,16 @@
 		<a href="#" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#add-manager">Add Manager</a>
 	</div>
 
+  <% messages.forEach(function(message){ %>
+  <div class="class alert alert-danger margin-top-20" role="alert">
+    <% message.errors.forEach(function(error){ %>
+    <div>
+      <%= error.message %>: <%= error.path %>
+    </div>
+    <% }); %>
+  </div>
+  <% }); %>
+
 	<table class="table table-striped margin-top-20">
 		<thead>
 			<th>First Name</th>
