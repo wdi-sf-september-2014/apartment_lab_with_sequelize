@@ -2,9 +2,11 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     methodOverride = require("method-override"),
     app = express(),
-    models = require('./models/index');
+    models = require('./models/index'),
+    engine = require('ejs-locals');
 
 app.set("view engine", "ejs");
+app.engine('ejs', engine);
 
 app.use(bodyParser.urlencoded({
     extended: true
