@@ -3,7 +3,7 @@
 <head>
 	<title>Apartment Manager</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-	<link rel="stylesheet" href="style.css" />
+	
 </head>
 <body>
 
@@ -23,14 +23,16 @@
 			<th>Action</th>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Arun</td>
-				<td>Sood</td>
-				<td>219 East Crystal Cove Terrace</td>
-				<td>
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#maint">Maintenance Requests</a>
-				</td>
-			</tr>
+			<% for (var i = 0; i < all_tenants.length; i++) { %>
+				<tr>
+					<td><%= all_tenants[i].first_name %></td>
+					<td><%= all_tenants[i].last_name %></td>
+					<td><%= oneProperty.property %></td>
+					<td>
+						<a href="#" class="btn btn-primary">Add Maintenance Request</a>
+					</td>
+				</tr>
+			<% } %>
 		</tbody>
 	</table>
 </div>
@@ -75,28 +77,28 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 				<h4 class="modal-title" id="myModalLabel">Add a Tenant</h4>
 			</div>
+			<form type="text" method="post" action="/tenant/<%= man_id %>">
 			<div class="modal-body">
 				<h4>First Name</h4>
 				<div class="margin-top-20">
-					<input id="tenant-first" class="form-control" placeholder="Tenant First Name" />
+					<input id="tenant-first" class="form-control" name="firstname" placeholder="Tenant First Name" />
 				</div>
 				<h4 class="margin-top-20">Last Name</h4>
 				<div class="margin-top-20">
-					<input id="tenant-last" class="form-control" placeholder="Tenant Last Name" />
+					<input id="tenant-last" class="form-control" name="lastname" placeholder="Tenant Last Name" />
 				</div>
 				<h4 class="margin-top-20">Property Rented</h4>
 				<div class="margin-top-20">
 					<select class="form-control" id="tenant-prop-select">
-						<option value="1">219 East Crystal Cove Terrace</option>
-						<option value="2">219 East Crystal Cove Terrace</option>
-						<option value="3">219 East Crystal Cove Terrace</option>
+						<option><%= oneProperty.property %></option>
 					</select>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button id="save-tenant" type="button" class="btn btn-primary">Save Tenant</button>
+				<button id="save-tenant" type="submit" class="btn btn-primary">Save Tenant</button>
 			</div>
+			</form>
 		</div>
 	</div>
 </div>
